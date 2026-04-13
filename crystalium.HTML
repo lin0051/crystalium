@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodePrime — Твій старт в IT</title>
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --accent: #818cf8;
+            --bg: #020617;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Анімований фон */
+        .bg-stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(129, 140, 248, 0.05) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        /* ГОЛОВНИЙ ЕКРАН */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: 0.8s ease;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 20px 0 40px;
+        }
+
+        .main-btn {
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
+            transition: 0.3s;
+        }
+
+        .main-btn:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(56, 189, 248, 0.5); }
+
+        /* БУРГЕР-МЕНЮ */
+        .burger {
+            position: fixed;
+            top: 30px; left: 30px;
+            z-index: 1000;
+            cursor: pointer;
+            width: 50px; height: 50px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .burger span {
+            width: 24px; height: 2px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* БОКОВА ПАНЕЛЬ */
+        .sidebar {
+            position: fixed;
+            left: -320px; top: 0;
+            width: 320px; height: 100%;
+            background: rgba(2, 6, 23, 0.98);
+            backdrop-filter: blur(30px);
+            z-index: 999;
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            padding: 120px 40px;
+            border-right: 1px solid var(--border);
+        }
+
+        .sidebar.active { left: 0; }
+
+        .sidebar h3 { color: #475569; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        .sidebar a {
+            display: block;
+            padding: 15px 0;
+            color: #f8fafc;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover { color: var(--primary); padding-left: 10px; }
+
+        /* КОНТЕНТ */
+        .content-container {
+            display: none;
+            padding: 100px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .content-container.active { display: block; animation: fadeInUp 0.8s ease; }
+
+        .step-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .step-num { color: var(--primary); font-weight: 700; font-family: monospace; }
+
+        .img-wrap {
+            width: 100%; border-radius: 20px; overflow: hidden; margin: 25px 0;
+            border: 1px solid var(--border);
+        }
+
+        img { width: 100%; display: block; }
+
+        pre { background: #000; padding: 20px; border-radius: 15px; overflow-x: auto; color: #fbbf24; border: 1px solid #1e293b; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-stars"></div>
+
+    <div class="burger" onclick="toggleSidebar()">
+        <span></span><span></span><span></span>
+    </div>
+
+    <nav class="sidebar" id="sidebar">
+        <h3>Курси</h3>
+        <a href="#" onclick="showSection('home')">Головна</a>
+        <a href="#" onclick="showSection('html')">HTML Academy</a>
+        <a href="#" onclick="showSection('python')">Python Master</a>
+        <a href="#" onclick="showSection('java')">Java Expert</a>
+    </nav>
+
+    <section id="home" class="hero content-container active">
+        <h1>CODEPRIME</h1>
+        <p>Навчіться створювати майбутнє. Обирайте мову та почніть свою подорож у світ програмування вже сьогодні.</p>
+        <button class="main-btn" onclick="toggleSidebar()">Почати навчання</button>
+    </section>
+
+    <section id="html" class="content-container">
+        <h2 style="font-size: 3rem; text-align: center;">HTML5 & Web</h2>
+        
+        <div class="step-card">
+            <span class="step-num">STEP 01</span>
+            <h2>Налаштування IDE</h2>
+            <p>Встановіть VS Code для комфортного написання коду.</p>
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=900"></div>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 02</span>
+            <h2>Каркас сторінки</h2>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+  &lt;h1&gt;Привіт!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 03</span>
+            <h2>Стилізація</h2>
+            <p>Використовуйте CSS для кольорів та відступів.</p>
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=900"></div>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 04</span>
+            <h2>Медіа-файли</h2>
+            <p>Додавайте фото та відео через теги <code>img</code> та <code>video</code>.</p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 05</span>
+            <h2>Публікація</h2>
+            <p>Завантажте свій сайт на GitHub Pages, щоб його побачив увесь світ.</p>
+        </div>
+    </section>
+
+    <section id="python" class="content-container">
+        <h2 style="font-size: 3rem; text-align: center;">Python Logic</h2>
+        
+        <div class="step-card">
+            <span class="step-num">STEP 01</span>
+            <h2>Інсталяція</h2>
+            <p>Завантажте Python 3.12 та додайте його в PATH.</p>
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=900"></div>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 02</span>
+            <h2>Вивід даних</h2>
+            <pre><code>print("Твій шлях почався!")</code></pre>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 03</span>
+            <h2>Математика коду</h2>
+            <p>Виконуйте розрахунки за допомогою змінних.</p>
+            <div class="img-wrap"><img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=900"></div>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 04</span>
+            <h2>Робота зі списками</h2>
+            <p>Зберігайте тисячі значень в одному <code>list</code>.</p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 05</span>
+            <h2>Автоматизація</h2>
+            <p>Пишіть скрипти, які виконують роботу за вас.</p>
+        </div>
+    </section>
+
+    <section id="java" class="content-container">
+        <h2 style="font-size: 3rem; text-align: center;">Java Expert</h2>
+        
+        <div class="step-card">
+            <span class="step-num">STEP 01</span>
+            <h2>Встановлення JDK</h2>
+            <p>Налаштуйте Java Development Kit на вашому ПК.</p>
+            <div class="img-box"><img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800"></div>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 02</span>
+            <h2>Класи та Об'єкти</h2>
+            <pre><code>public class Hero {
+  String name = "Neo";
+}</code></pre>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 03</span>
+            <h2>Типи даних</h2>
+            <p>Вивчайте сувору типізацію: int, double, String.</p>
+            <div class="img-box"><img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=800"></div>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 04</span>
+            <h2>Android розробка</h2>
+            <p>Як використовувати Java для створення мобільних ігор.</p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-num">STEP 05</span>
+            <h2>Бази даних</h2>
+            <p>Підключення SQL до ваших Java-додатків.</p>
+        </div>
+    </section>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        function showSection(id) {
+            // Закриваємо меню
+            document.getElementById('sidebar').classList.remove('active');
+            
+            // Ховаємо всі секції
+            document.querySelectorAll('.content-container').forEach(sec => {
+                sec.classList.remove('active');
+            });
+
+            // Показуємо обрану
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
